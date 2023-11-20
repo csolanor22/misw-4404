@@ -15,23 +15,33 @@
 
 import os
 
+def get_error_lines(error_file_path):
+    with open(error_file_path, 'r') as f:
+        lineas = f.readlines()
+        return [line.rstrip().split(' ') for line in lineas]
+
+def es_error(linea):
+    return linea[0] == 'E'
+
+def es_de_severidad_mayor_a_50(linea):
+    return int(linea[1]) > 50
+
+def ordenar_errores(errores):
+    errores.sort(key=lambda x: int(x[2]))
+
+def imprimir_errores(errores):
+    for error in errores:
+        print(' '.join(error))
+
 def organizar():
     error_file_path = './refactoring/problema2/data/error.log'
-
-    with open(error_file_path, 'r') as f:
-        errores = []
-        
-        lineas = f.readlines()
-        lineas = [line.rstrip().split(' ') for line in lineas]
-
-        for linea in lineas:
-            if linea[0] == 'E' and int(linea[1]) > 50:
-                errores.append(linea)
-
-        errores.sort(key=lambda x: int(x[2]))
-
-        for error in errores:
-            print(' '.join(error))
+    errores = []
+    lineas = get_error_lines(error_file_path)
+    for linea in lineas:
+        if es_error(linea) and es_de_severidad_mayor_a_50(linea):
+            errores.append(linea)
+    ordenar_errores(errores)
+    imprimir_errores(errores)
 
 def main():
     organizar()

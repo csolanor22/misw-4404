@@ -2,36 +2,28 @@ package cars;
 
 public class Car {
 	private Motor motor;
-	private Dashboard dashboard;
 	
-	public Car(Motor motor, Dashboard dashboard) {
+	public Car(Motor motor) {
 		this.motor = motor;
-		this.dashboard = dashboard;
 	}
 	
-	public void accelerate() {
-		this.motor.rpm += 100;
-		this.motor.speed += 10;
-		this.motor.oilLevel -= 0.1;
-		this.motor.gasLevel -= 0.5;
-	}
-	
-	public void stop() {
-		this.motor.rpm -= 0;
-		this.motor.speed -= 0;
-		this.motor.oilLevel -= 0.1;
-		this.motor.gasLevel -= 0;
+	public void printDashboard() {
+		System.out.println("--------------------------------");
+		System.out.println("DASHBOARD:");
+		System.out.println("\t RPM: " + this.motor.rpm);
+		System.out.println("\t Speed: " + this.motor.speed);
+		System.out.println("\t Oil level: " + this.motor.oilLevel);
+		System.out.println("\t Gas level: " + this.motor.gasLevel);
 	}
 	
 	public static void main(String[] args) {
 		Motor motor = new Motor();
-		Dashboard dashboard = new Dashboard(motor);
-		Car car = new Car(motor, dashboard);
+		Car car = new Car(motor);
 		
-		dashboard.printDashboard();
-		car.accelerate();
-		dashboard.printDashboard();
-		car.stop();
-		dashboard.printDashboard();
+		car.printDashboard();
+		car.motor.accelerate();
+		car.printDashboard();
+		car.motor.stop();
+		car.printDashboard();
 	}
 }

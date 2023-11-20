@@ -1,0 +1,20 @@
+
+G	java:S106"+Replace this use of System.out by a logger.(ã¿Ù­8Ûä¦¼1
+L	java:S106"+Replace this use of System.out by a logger.(ÛÕÔöüÿÿÿÿ8“íŸ¦¼1
+v
+java:S1128"TRemove this unnecessary import: same package classes are always implicitly imported.(—âªÿÿÿÿÿ8—ÒÑ„¾1
+q
+java:S1128"TRemove this unnecessary import: same package classes are always implicitly imported.(öÂÈÄ8—ÒÑ„¾1
+q
+java:S1128"TRemove this unnecessary import: same package classes are always implicitly imported.(æÛğ²8˜ÒÑ„¾1
+P
+java:S1128"3Remove this unused import 'java.io.BufferedReader'.(€é²Å8˜ÒÑ„¾1
+F
+java:S1128")Remove this unused import 'java.io.File'.(†Ğ¥Å8˜ÒÑ„¾1
+Q
+java:S1128	"/Remove this unused import 'java.io.FileReader'.(Â¡¢äşÿÿÿÿ8™ÒÑ„¾1
+R
+java:S1128
+"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8™ÒÑ„¾1
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8™ÒÑ„¾1
