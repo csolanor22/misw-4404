@@ -41,20 +41,29 @@ public class Editor {
 	}
 	
 	public void runEditor() {
-		System.out.println("Running editor...");
-		System.out.println("Enter text:");
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String text;
-		try {
-			text = br.readLine();
-			this.checkSpelling(text);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.printInConsole();
+		String text = processInput();
+		this.checkSpelling(text);
 	}
 	
 	public static void main(String[] args) {
 		Editor editor = new Editor();
 		editor.runEditor();
+	}
+	
+	private void printInConsole() {
+		System.out.println("Running editor...");
+		System.out.println("Enter text:");
+	}
+	
+	private String processInput() {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String text = "";
+		try {
+			text = br.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return text;
 	}
 }
