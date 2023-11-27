@@ -450,118 +450,122 @@ public class Modelo {
 		
 	}
 	
+	public void unificarVertice(ILista lista, ILista lista2, String criterio){
+		Comparator<Vertex<String, Landing>> comparador=null;
+
+		Ordenamiento<Vertex<String, Landing>> algsOrdenamientoEventos=new Ordenamiento<Vertex<String, Landing>>();;
+
+		comparador= new Vertex.ComparadorXKey();
+		try 
+		{
+
+			if (lista!=null)
+			{
+				algsOrdenamientoEventos.ordenarMergeSort(lista, comparador, false);
+
+				for(int i=1; i<=lista.size(); i++)
+				{
+					Vertex actual= (Vertex) lista.getElement(i);
+					Vertex siguiente= (Vertex) lista.getElement(i+1);
+
+					if(siguiente!=null)
+					{
+						if(comparador.compare(actual, siguiente)!=0)
+						{
+							lista2.insertElement(actual, lista2.size()+1);
+						}
+					}
+					else
+					{
+						Vertex anterior= (Vertex) lista.getElement(i-1);
+
+						if(anterior!=null)
+						{
+							if(comparador.compare(anterior, actual)!=0)
+							{
+								lista2.insertElement(actual, lista2.size()+1);
+							}
+						}
+						else
+						{
+							lista2.insertElement(actual, lista2.size()+1);
+						}
+					}
+
+				}
+			}
+		} 
+		catch (PosException | VacioException| NullException  e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void unificarNoVertice(ILista lista, ILista lista2){
+		Comparator<Country> comparador=null;
+
+		Ordenamiento<Country> algsOrdenamientoEventos=new Ordenamiento<Country>();;
+
+		comparador= new Country.ComparadorXNombre();
+
+		try 
+		{
+
+			if (lista!=null)
+			{
+				algsOrdenamientoEventos.ordenarMergeSort(lista, comparador, false);
+			}
+
+			for(int i=1; i<=lista.size(); i++)
+			{
+				Country actual= (Country) lista.getElement(i);
+				Country siguiente= (Country) lista.getElement(i+1);
+
+				if(siguiente!=null)
+				{
+					if(comparador.compare(actual, siguiente)!=0)
+					{
+						lista2.insertElement(actual, lista2.size()+1);
+					}
+				}
+				else
+				{
+					Country anterior= (Country) lista.getElement(i-1);
+
+					if(anterior!=null)
+					{
+						if(comparador.compare(anterior, actual)!=0)
+						{
+							lista2.insertElement(actual, lista2.size()+1);
+						}
+					}
+					else
+					{
+						lista2.insertElement(actual, lista2.size()+1);
+					}
+				}
+
+			}
+		}
+		catch (PosException | VacioException| NullException  e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public ILista unificar(ILista lista, String criterio)
 	{
-
 		ILista lista2=new ArregloDinamico(1);
 
 		if(criterio.equals("Vertice"))
 		{
-			Comparator<Vertex<String, Landing>> comparador=null;
-
-			Ordenamiento<Vertex<String, Landing>> algsOrdenamientoEventos=new Ordenamiento<Vertex<String, Landing>>();;
-
-			comparador= new Vertex.ComparadorXKey();
-
-
-			try 
-			{
-
-				if (lista!=null)
-				{
-					algsOrdenamientoEventos.ordenarMergeSort(lista, comparador, false);
-
-					for(int i=1; i<=lista.size(); i++)
-					{
-						Vertex actual= (Vertex) lista.getElement(i);
-						Vertex siguiente= (Vertex) lista.getElement(i+1);
-
-						if(siguiente!=null)
-						{
-							if(comparador.compare(actual, siguiente)!=0)
-							{
-								lista2.insertElement(actual, lista2.size()+1);
-							}
-						}
-						else
-						{
-							Vertex anterior= (Vertex) lista.getElement(i-1);
-
-							if(anterior!=null)
-							{
-								if(comparador.compare(anterior, actual)!=0)
-								{
-									lista2.insertElement(actual, lista2.size()+1);
-								}
-							}
-							else
-							{
-								lista2.insertElement(actual, lista2.size()+1);
-							}
-						}
-
-					}
-				}
-			} 
-			catch (PosException | VacioException| NullException  e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			unificarVertice(lista,lista2,criterio);
 		}
 		else
 		{
-			Comparator<Country> comparador=null;
-
-			Ordenamiento<Country> algsOrdenamientoEventos=new Ordenamiento<Country>();;
-
-			comparador= new Country.ComparadorXNombre();
-
-			try 
-			{
-
-				if (lista!=null)
-				{
-					algsOrdenamientoEventos.ordenarMergeSort(lista, comparador, false);
-				}
-
-					for(int i=1; i<=lista.size(); i++)
-					{
-						Country actual= (Country) lista.getElement(i);
-						Country siguiente= (Country) lista.getElement(i+1);
-
-						if(siguiente!=null)
-						{
-							if(comparador.compare(actual, siguiente)!=0)
-							{
-								lista2.insertElement(actual, lista2.size()+1);
-							}
-						}
-						else
-						{
-							Country anterior= (Country) lista.getElement(i-1);
-
-							if(anterior!=null)
-							{
-								if(comparador.compare(anterior, actual)!=0)
-								{
-									lista2.insertElement(actual, lista2.size()+1);
-								}
-							}
-							else
-							{
-								lista2.insertElement(actual, lista2.size()+1);
-							}
-						}
-
-					}
-				}
-			
-			catch (PosException | VacioException| NullException  e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			unificarNoVertice(lista,lista2);
 		}
 
 		return lista2;
@@ -626,36 +630,29 @@ public class Modelo {
 		return tabla;
 	}
 
-	public void cargar() throws IOException
-	{
-		grafo= new GrafoListaAdyacencia(2);
-		paises= new TablaHashLinearProbing(2);
-		points= new  TablaHashLinearProbing(2);
-		landingidtabla= new TablaHashSeparteChaining(2);
-		nombrecodigo=new TablaHashSeparteChaining(2);
-		
+	public void cargarCountries(GrafoListaAdyacencia grafo, ITablaSimbolos paises) throws IOException{
 		Reader in = new FileReader("./data/countries.csv");
 		Iterable<CSVRecord> records = CSVFormat.RFC4180.withHeader().parse(in);
 		int contador=1;
-		for (CSVRecord record : records) 
+		for (CSVRecord record1 : records) 
 		{
-			if(!record.get(0).equals(""))
+			if(!record1.get(0).equals(""))
 			{
-				String countryName= record.get(0);
+				String countryName= record1.get(0);
 				
-				String capitalName= record.get(1);
+				String capitalName= record1.get(1);
 				
-				double latitude= Double.parseDouble(record.get(2));
+				double latitude= Double.parseDouble(record1.get(2));
 				
-				double longitude= Double.parseDouble(record.get(3));
+				double longitude= Double.parseDouble(record1.get(3));
 				
-				String code= record.get(4);
+				String code= record1.get(4);
 				
-				String continentName= record.get(5);
+				String continentName= record1.get(5);
 				
-				float population= Float.parseFloat(record.get(6).replace(".", ""));
+				float population= Float.parseFloat(record1.get(6).replace(".", ""));
 				
-				double users= Double.parseDouble(record.get(7).replace(".", ""));;
+				double users= Double.parseDouble(record1.get(7).replace(".", ""));;
 				
 				Country pais= new Country(countryName, capitalName, latitude, longitude, code, continentName, population, users);
 				
@@ -666,8 +663,11 @@ public class Modelo {
 			}
 
 		}
-		
-		
+
+	}
+
+	public void cargarPoints(ITablaSimbolos points) throws IOException{
+
 		Reader in2 = new FileReader("./data/landing_points.csv");
 		Iterable<CSVRecord> records2 = CSVFormat.RFC4180.withHeader().parse(in2);
 
@@ -696,8 +696,10 @@ public class Modelo {
 			
 			Country pais= null;
 		}
-		
-		
+	}
+
+	public void cargarConnections(GrafoListaAdyacencia grafo, ITablaSimbolos points, ITablaSimbolos landingidtabla, ITablaSimbolos nombrecodigo) throws IOException{
+
 		Reader in3 = new FileReader("./data/connections.csv");
 		Iterable<CSVRecord> records3 = CSVFormat.RFC4180.withHeader().parse(in3);
 
@@ -790,59 +792,73 @@ public class Modelo {
 				}
 			}
 			
-			try
-			{
-				
-				ILista elementopc= (ILista) landingidtabla.get(landing1.getLandingId());
-				if (elementopc==null)
-				{
-					ILista valores=new ArregloDinamico(1);
-					valores.insertElement(vertice1, valores.size() +1);
-
-					landingidtabla.put(landing1.getLandingId(), valores);
-					
-				}
-				else if (elementopc!=null)
-				{
-					elementopc.insertElement(vertice1, elementopc.size()+1);
-				}
+			landingConnections(landingidtabla, landing1, landing2, vertice1, vertice2);
 			
-				elementopc= (ILista) landingidtabla.get(landing2.getLandingId());
-	
-				if (elementopc==null)
-				{
-					ILista valores=new ArregloDinamico(1);
-					valores.insertElement(vertice2, valores.size() +1);
-	
-					landingidtabla.put(landing2.getLandingId(), valores);
-	
-				}
-				else if (elementopc!=null)
-				{
-					elementopc.insertElement(vertice2, elementopc.size()+1);
-	
-				}
-				
-				elementopc= (ILista) nombrecodigo.get(landing1.getLandingId());
-				
-				if (elementopc==null)
-				{
-					String nombre=landing1.getName();
-					String codigo=landing1.getLandingId();
-
-					nombrecodigo.put(nombre, codigo);
-	
-				}
-			}
-			catch(PosException | NullException e)
-			{
-				e.printStackTrace();
-			}
-			
-			
-
 		}
+	}
+
+	public void landingConnections(ITablaSimbolos landingidtabla, Landing landing1, Landing landing2, Vertex vertice1, Vertex vertice2){
+		try{
+				
+			ILista elementopc= (ILista) landingidtabla.get(landing1.getLandingId());
+			if (elementopc==null)
+			{
+				ILista valores=new ArregloDinamico(1);
+				valores.insertElement(vertice1, valores.size() +1);
+
+				landingidtabla.put(landing1.getLandingId(), valores);
+				
+			}
+			else if (elementopc!=null)
+			{
+				elementopc.insertElement(vertice1, elementopc.size()+1);
+			}
 		
+			elementopc= (ILista) landingidtabla.get(landing2.getLandingId());
+
+			if (elementopc==null)
+			{
+				ILista valores=new ArregloDinamico(1);
+				valores.insertElement(vertice2, valores.size() +1);
+
+				landingidtabla.put(landing2.getLandingId(), valores);
+
+			}
+			else if (elementopc!=null)
+			{
+				elementopc.insertElement(vertice2, elementopc.size()+1);
+
+			}
+			
+			elementopc= (ILista) nombrecodigo.get(landing1.getLandingId());
+			
+			if (elementopc==null)
+			{
+				String nombre=landing1.getName();
+				String codigo=landing1.getLandingId();
+
+				nombrecodigo.put(nombre, codigo);
+
+			}
+		}
+		catch(PosException | NullException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void cargar() throws IOException
+	{
+		grafo= new GrafoListaAdyacencia(2);
+		paises= new TablaHashLinearProbing(2);
+		points= new  TablaHashLinearProbing(2);
+		landingidtabla= new TablaHashSeparteChaining(2);
+		nombrecodigo=new TablaHashSeparteChaining(2);
+		
+		cargarCountries(grafo,paises);
+		cargarPoints(points);
+		cargarConnections(grafo, points, landingidtabla, nombrecodigo);
+				
 		try
 		{
 			ILista valores = landingidtabla.valueSet();
